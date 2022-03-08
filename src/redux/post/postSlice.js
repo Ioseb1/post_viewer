@@ -16,13 +16,22 @@ export const getSinglePost = createAsyncThunk(
   }
 )
 
+export const deleteSinglePost = createAsyncThunk(
+  'posts/deleteSinglePost',
+  async(id) => {
+    const { data } =  await axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
+    return data
+  }
+)
+
 export const postSlice = createSlice({
     name: 'posts',
     initialState: {
       loading: false,
       posts: [],
       singlePost: {},
-      error: {}
+      error: {},
+      deleted: false
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -35,6 +44,12 @@ export const postSlice = createSlice({
         // Add user to the state array
         state.loading = false
         state.singlePost = action.payload
+      })
+      builder.addCase(deleteSinglePost.fulfilled, (state, action) => {
+        // console.log(action);
+        // console.log(state);
+        state.loading = false
+        state.deleted = true
       })
       // [getAllPosts.pending]: (state) => {
       //   state.loading = true
