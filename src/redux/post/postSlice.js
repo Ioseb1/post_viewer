@@ -1,25 +1,58 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
+// const initialState = {
+//   loading: false,
+//   posts: [],
+//   singlePost: {},
+//   error: {}
+// };
 
-const postSlice = createSlice({
-    name: 'post',
+export const getAllPosts = createAsyncThunk(
+  'posts/getPosts',
+  async (thunkAPI) => {
+    const { data } = await axios.get('https://jsonplaceholder.typicode.com/posts')
+    return data
+})
+
+const getSinglePost = createAsyncThunk(
+  'posts/getSinglePost',
+  async(id) => {
+    const res =  await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`).then(
+      (data) => data.json()
+    )
+    return res
+  }
+)
+
+export const postSlice = createSlice({
+    name: 'posts',
     initialState: {
       loading: false,
-      posts: []
+      posts: [],
+      singlePost: {},
+      error: {}
     },
-    reducers: {
-      incremented: state => {
-        // Redux Toolkit allows us to write "mutating" logic in reducers. It
-        // doesn't actually mutate the state because it uses the Immer library,
-        // which detects changes to a "draft state" and produces a brand new
-        // immutable state based off those changes
-        state.value += 1
-      },
-      decremented: state => {
-        state.value -= 1
-      }
+    reducers: {},
+    extraReducers: (builder) => {
+      builder.addCase(getAllPosts.fulfilled, (state, action) => {
+        // Add user to the state array
+        console.log(action);
+        state.loading = false
+        state.posts.push(action.payload)
+      })
+      // [getAllPosts.pending]: (state) => {
+      //   state.loading = true
+      // },
+      // [getAllPosts.fulfilled]: (state, { payload }) => {
+      //   console.log(payload);
+      //   state.loading = false
+      //   state.posts.push(payload)
+      // },
+      // [getAllPosts.rejected]: (state) => {
+      //   state.loading = false
+      // },
     }
   })
   
-  export const { incremented, decremented } = postSlice.actions
+  export const postReducer = postSlice
