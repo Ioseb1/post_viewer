@@ -32,6 +32,14 @@ export const getPostComments = createAsyncThunk(
   }
 )
 
+export const getPostByUser = createAsyncThunk(
+  'posts/getSingleUserPosts',
+  async(id) => {
+    const { data } =  await axios.get(`https://jsonplaceholder.typicode.com/users/${id}/posts`)
+    return data
+  }
+)
+
 export const postSlice = createSlice({
     name: 'posts',
     initialState: {
@@ -40,7 +48,8 @@ export const postSlice = createSlice({
       singlePost: {},
       error: {},
       deleted: false,
-      postComments: []
+      postComments: [],
+      userPosts: []
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -64,6 +73,11 @@ export const postSlice = createSlice({
         // Add user to the state array
         state.loading = false
         state.postComments.push(action.payload)
+      })
+      builder.addCase(getPostByUser.fulfilled, (state, action) => {
+        // Add user to the state array
+        state.loading = false
+        state.userPosts.push(action.payload)
       })
 
       // [getAllPosts.pending]: (state) => {
