@@ -1,13 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-// const initialState = {
-//   loading: false,
-//   posts: [],
-//   singlePost: {},
-//   error: {}
-// };
-
 export const getAllPosts = createAsyncThunk(
   'posts/getPosts',
   async (thunkAPI) => {
@@ -15,13 +8,11 @@ export const getAllPosts = createAsyncThunk(
     return data
 })
 
-const getSinglePost = createAsyncThunk(
+export const getSinglePost = createAsyncThunk(
   'posts/getSinglePost',
   async(id) => {
-    const res =  await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`).then(
-      (data) => data.json()
-    )
-    return res
+    const { data } =  await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`)
+    return data
   }
 )
 
@@ -39,6 +30,11 @@ export const postSlice = createSlice({
         // Add user to the state array
         state.loading = false
         state.posts.push(action.payload)
+      })
+      builder.addCase(getSinglePost.fulfilled, (state, action) => {
+        // Add user to the state array
+        state.loading = false
+        state.singlePost = action.payload
       })
       // [getAllPosts.pending]: (state) => {
       //   state.loading = true

@@ -8,7 +8,7 @@ import { getAllPosts } from '../redux/post/postSlice'
 function Home() {
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state?.post);
-  console.log(posts);
+  //console.log(posts);
 
   useEffect(() => {
     dispatch(getAllPosts());
