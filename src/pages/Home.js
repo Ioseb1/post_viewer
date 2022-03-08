@@ -3,7 +3,8 @@ import Loader from '../components/Loader'
 import PostItem from '../components/PostItem'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllPosts } from '../redux/post/postSlice'
-import { Pagination } from 'antd'
+import { Pagination, Input } from 'antd'
+import { UserOutlined } from '@ant-design/icons';
 
 
 function Home() {
@@ -39,6 +40,7 @@ function Home() {
   return (
     <div className="home">
       <h3 className="home__title">All Posts</h3>   
+      <Input addonBefore="Search Post" size="large" placeholder="Search Post By User" prefix={<UserOutlined />} />
       
       <div className="home__container">
         { !posts ? <Loader /> : null}

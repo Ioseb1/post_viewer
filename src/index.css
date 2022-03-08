@@ -46,6 +46,28 @@ header {
   border-radius: 10px;
 }
 
+.detail__comments__container {
+  border-radius: 2rem;
+  margin: 4rem 1rem 2rem 1rem;
+  padding: 3rem;
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  row-gap: 2rem;
+  background-color: aliceblue;
+}
+
+.detail__comments__container div {
+  background-color: #1890ff;
+  padding: 2rem;
+  color: #fff;
+  margin: 1rem;
+  border-radius: 10px;
+}
+
+/* .detail__comments__container div h1 {
+  color: #fff;
+} */
+
 footer {
   display: flex;
   align-items: center;
