@@ -37,7 +37,6 @@ export const postSlice = createSlice({
     extraReducers: (builder) => {
       builder.addCase(getAllPosts.fulfilled, (state, action) => {
         // Add user to the state array
-        console.log(action);
         state.loading = false
         state.posts.push(action.payload)
       })
@@ -55,4 +54,4 @@ export const postSlice = createSlice({
     }
   })
   
-  export const postReducer = postSlice
+  export const postReducer = postSlice.reducer
