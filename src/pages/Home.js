@@ -13,7 +13,7 @@ function Home() {
   const { userPosts } = useSelector((state) => state?.post);
   const userLen = userPosts?.length
   const postsLen = posts?.length
-  console.log(userPosts);
+
 
   const pageSize = 4;
 

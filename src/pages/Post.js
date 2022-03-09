@@ -13,7 +13,6 @@ function Post() {
   const { singlePost } = useSelector((state) => state?.post);
   const { postComments } = useSelector((state) => state?.post);
   const {userComment} = useSelector((state) => state?.post);
-  console.log(userComment);
 
   const [postId, setPostId] = useState(0);
   const [name, setName] = useState('');
@@ -53,7 +52,7 @@ function Post() {
      <div className="detail__comments__container">
        {
          postComments[0]?.map((comment) => (
-            <div className="detail__comments__inner">
+            <div className="detail__comments__inner" key={comment.id}>
                 <h1>{ comment.name }</h1>
                 <p>Author Email - { comment.email }</p>
                 <p>{ comment.body }</p>
