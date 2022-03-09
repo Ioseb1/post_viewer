@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Loader from '../components/Loader'
 import PostItem from '../components/PostItem'
 import { useSelector, useDispatch } from 'react-redux'
-import { getAllPosts, getPostByUser } from '../redux/post/postSlice'
+import { getAllPosts, getPostByUser, clearGetPostsByUser } from '../redux/post/postSlice'
 import { Pagination, Input } from 'antd'
 import { UserOutlined } from '@ant-design/icons';
 
@@ -29,7 +29,7 @@ function Home() {
   }
 
   const handleUserFilter = (userId) => {
-    if (!userId) return
+    if (!userId) dispatch(clearGetPostsByUser());
     dispatch(getPostByUser(userId))
   }
 
@@ -45,7 +45,7 @@ function Home() {
     setTotalPage(posts?.length / pageSize)
     setMinIndex(0)
     setMaxIndex(pageSize)
-  }, [posts?.length])
+  }, [posts?.length, userPosts, userLen])
   
 
   return (
@@ -57,19 +57,20 @@ function Home() {
       placeholder="Search Post By User ID" 
       prefix={<UserOutlined />} 
       onChange={(e) => handleUserFilter(e.target.value)}
+      style={{ width: '90%', marginLeft: '5%' }}
     />
       
       <div className="home__container">
         { !posts ? <Loader /> : null}
-        {
+        {/* {
           posts[0]?.map((item, index) => 
           index >= minIndex &&
           index < maxIndex && (
             <PostItem key={item.id} id={item.id} title={item.title} 
               userId={item.userId} body={item.body} />
           ))
-        }
-        {/* { !userPosts ? posts[0]?.map((item, index) => 
+        } */}
+        { userPosts.length === 0 ? posts[0]?.map((item, index) => 
             index >= minIndex &&
             index < maxIndex && (
               <PostItem key={item.id} id={item.id} title={item.title} 
@@ -79,7 +80,7 @@ function Home() {
             index < maxIndex && (
               <PostItem key={item.id} id={item.id} title={item.title} 
                 userId={item.userId} body={item.body} />
-            ))} */}
+            ))}
       </div>
 
       <Pagination

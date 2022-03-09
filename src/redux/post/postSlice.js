@@ -51,7 +51,11 @@ export const postSlice = createSlice({
       postComments: [],
       userPosts: []
     },
-    reducers: {},
+    reducers: {
+      clearGetPostsByUser(state) {
+        state.userPosts = []
+      }
+    },
     extraReducers: (builder) => {
       builder.addCase(getAllPosts.fulfilled, (state, action) => {
         // Add user to the state array
@@ -94,4 +98,5 @@ export const postSlice = createSlice({
     }
   })
   
+  export const { clearGetPostsByUser } = postSlice.actions
   export const postReducer = postSlice.reducer
