@@ -26,11 +26,11 @@ header {
 .home__container {
   border-radius: 2rem;
   margin: 4rem 1rem 2rem 1rem;
-  padding: 3rem;
+  padding: 2rem;
   display: grid;
   grid-template-columns: 3fr 3fr;
   row-gap: 2rem;
-  background-color: rgb(181, 255, 230);
+  background-color: rgb(181, 255, 230); 
 }
 
 .post__detail {
@@ -40,7 +40,7 @@ header {
 }
 
 .detail__container div {
-  margin: 1rem;
+  margin: 0.6rem;
   background-color: rgb(181, 255, 230);
   padding: 1rem;
   border-radius: 10px;
@@ -48,12 +48,10 @@ header {
 
 .detail__comments__container {
   border-radius: 2rem;
-  margin: 4rem 1rem 2rem 1rem;
-  padding: 3rem;
-  display: grid;
-  grid-template-columns: 2fr 2fr;
-  row-gap: 2rem;
+  display: flex;
+  flex-direction: column;
   background-color: aliceblue;
+  font-size: 12px;
 }
 
 .detail__comments__container div {
@@ -62,6 +60,28 @@ header {
   color: #fff;
   margin: 1rem;
   border-radius: 10px;
+}
+
+.post__item {
+  background-color: rgb(246, 246, 246);
+  border: 1px solid#1890ff;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 0.5rem;
+}
+
+.detail__comments__inner .hidden {
+  visibility: hidden;
+  display: none;
+}
+
+.detail__comments__inner .visible {
+  visibility: visible;
+}
+
+.detail__comments__inner h2 {
+  text-align: center;
+  font-size: 24px;
 }
 
 /* .detail__comments__container div h1 {

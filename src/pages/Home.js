@@ -52,24 +52,17 @@ function Home() {
     <div className="home">
       <h3 className="home__title">All Posts</h3>   
       <Input 
-      addonBefore="Search Post" 
-      size="large" 
-      placeholder="Search Post By User ID" 
-      prefix={<UserOutlined />} 
-      onChange={(e) => handleUserFilter(e.target.value)}
-      style={{ width: '90%', marginLeft: '5%' }}
-    />
+        addonBefore="Search Post" 
+        size="large" 
+        placeholder="Search Post By User ID" 
+        prefix={<UserOutlined />} 
+        onChange={(e) => handleUserFilter(e.target.value)}
+        style={{ width: '90%', marginLeft: '5%' }}
+      />
       
       <div className="home__container">
         { !posts ? <Loader /> : null}
-        {/* {
-          posts[0]?.map((item, index) => 
-          index >= minIndex &&
-          index < maxIndex && (
-            <PostItem key={item.id} id={item.id} title={item.title} 
-              userId={item.userId} body={item.body} />
-          ))
-        } */}
+        
         { userPosts.length === 0 ? posts[0]?.map((item, index) => 
             index >= minIndex &&
             index < maxIndex && (

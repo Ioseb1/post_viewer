@@ -27,7 +27,7 @@ function PostItem({ ...props }) {
     }
 
     return (
-      <div>
+      <div className='post__item'>
           <h1>{ props.title }</h1>
           <p>Author ID - { props.userId }</p>
           <p style={{ width: '90%' }}>{ props.body }</p>

@@ -32,6 +32,25 @@ export const getPostComments = createAsyncThunk(
   }
 )
 
+export const createComment = createAsyncThunk(
+  'posts/postComment',
+  async(postId, name, email, body) => {
+    const config = {
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      body: { 
+          "postId": postId,
+          "name": name,
+          "email": email,
+          "body": body
+        }
+      }
+      const { data } =  await axios.post(`https://jsonplaceholder.typicode.com/comments`, config)
+      return data
+    }
+)
+
 export const getPostByUser = createAsyncThunk(
   'posts/getSingleUserPosts',
   async(id) => {
@@ -49,54 +68,44 @@ export const postSlice = createSlice({
       error: {},
       deleted: false,
       postComments: [],
-      userPosts: []
+      userPosts: [],
+      userComment: {}
     },
     reducers: {
       clearGetPostsByUser(state) {
         state.userPosts = []
+      },
+      clearUserComment(state) {
+        state.userComment = {}
       }
     },
     extraReducers: (builder) => {
       builder.addCase(getAllPosts.fulfilled, (state, action) => {
-        // Add user to the state array
         state.loading = false
         state.posts.push(action.payload)
       })
       builder.addCase(getSinglePost.fulfilled, (state, action) => {
-        // Add user to the state array
         state.loading = false
         state.singlePost = action.payload
       })
       builder.addCase(deleteSinglePost.fulfilled, (state, action) => {
-        // console.log(action);
-        // console.log(state);
         state.loading = false
         state.deleted = true
       })
       builder.addCase(getPostComments.fulfilled, (state, action) => {
-        // Add user to the state array
         state.loading = false
         state.postComments.push(action.payload)
       })
       builder.addCase(getPostByUser.fulfilled, (state, action) => {
-        // Add user to the state array
         state.loading = false
         state.userPosts.push(action.payload)
       })
-
-      // [getAllPosts.pending]: (state) => {
-      //   state.loading = true
-      // },
-      // [getAllPosts.fulfilled]: (state, { payload }) => {
-      //   console.log(payload);
-      //   state.loading = false
-      //   state.posts.push(payload)
-      // },
-      // [getAllPosts.rejected]: (state) => {
-      //   state.loading = false
-      // },
+      builder.addCase(createComment.fulfilled, (state, action) => {
+        state.loading = false
+        state.userComment = action.payload
+      })
     }
   })
   
-  export const { clearGetPostsByUser } = postSlice.actions
+  export const { clearGetPostsByUser, clearUserComment } = postSlice.actions
   export const postReducer = postSlice.reducer
